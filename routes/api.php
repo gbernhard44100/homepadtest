@@ -15,3 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/users', 'UserController@register');
+
+Route::post('/login', 'OAuthController@login');
