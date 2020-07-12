@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 /**
@@ -11,8 +12,6 @@ use Tests\TestCase;
  */
 class UserTest extends TestCase
 {
-    use RefreshDatabase;
-
     /**
      * Test if the user has been well registered
      *
@@ -20,6 +19,8 @@ class UserTest extends TestCase
      */
     public function testRegistrationSuccessfull()
     {
+        DB::beginTransaction();
+
         $response = $this->postJson('api/users', ['name' => 'Sally', 'email' => 'sally@test.com', 'password' => 'azertyuiop']);
 
         $response
@@ -32,6 +33,8 @@ class UserTest extends TestCase
                 'name' => 'Sally',
                 'email' => 'sally@test.com',
             ]);
+
+        DB::rollBack();
     }
 
     /**
@@ -41,6 +44,8 @@ class UserTest extends TestCase
      */
     public function testRegistrationFailed()
     {
+        DB::beginTransaction();
+
         $response1 = $this->postJson('api/users', ['name' => 'Sally', 'email' => 'sally@test.com', 'password' => 'azertyuiop']);
 
         $response2 = $this->postJson('api/users', ['name' => 'Sally2', 'email' => 'sally@test.com', 'password' => 'azer']);
@@ -49,5 +54,7 @@ class UserTest extends TestCase
             ->assertJson([
                 'errors' => 'This email address has already been used! | Your password is too short'
             ]);
+
+        DB::rollBack();
     }
 }
