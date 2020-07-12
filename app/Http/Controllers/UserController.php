@@ -68,7 +68,7 @@ class UserController extends Controller
     }
 
     /**
-     * Create the new user un the database
+     * Create the new user in the database
      *
      * @return \App\User
      */

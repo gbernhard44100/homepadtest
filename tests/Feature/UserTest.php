@@ -27,6 +27,11 @@ class UserTest extends TestCase
             ->assertJson([
                 'name' => 'Sally', 'email' => 'sally@test.com'
             ]);
+
+        $this->assertDatabaseHas('users', [
+                'name' => 'Sally',
+                'email' => 'sally@test.com',
+            ]);
     }
 
     /**
