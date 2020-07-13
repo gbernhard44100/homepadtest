@@ -16,4 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/users', 'UserController@register');
 
+
 Route::post('/login', 'OAuthController@login');
+
+/**
+ * Particularly usefull when rerouting by the Auth:API Middleware
+ */
+Route::get('/login', 'OAuthController@notifyInvalidToken')->name('login');
+
+
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/packages', 'PackageController@index');
+});

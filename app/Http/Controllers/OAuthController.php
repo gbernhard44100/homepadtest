@@ -20,13 +20,14 @@ class OAuthController extends Controller
     {
         if (!$this->isFormCompleted($request)) {
             return response(
-                json_encode(['errors' => 'Missing email or password']), 422
-                )->header('Content-Type', 'application/json');
+                json_encode(['errors' => 'Missing email or password']),
+                422
+            )->header('Content-Type', 'application/json');
         }
 
-        if(!Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+        if (!Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
             $messages = ['errors' => 'Wrong credentials'];
-            $codeStatus= 401;
+            $codeStatus = 401;
         } else {
             $accessToken = Auth::user()->createToken('Auth Token')->accessToken;
 
@@ -37,8 +38,9 @@ class OAuthController extends Controller
         }
 
         return response(
-            json_encode($messages), $codeStatus
-            )->header('Content-Type', 'application/json');
+            json_encode($messages),
+            $codeStatus
+        )->header('Content-Type', 'application/json');
     }
 
     /**
@@ -60,5 +62,18 @@ class OAuthController extends Controller
         }
 
         return $formWellCompleted;
+    }
+
+    /**
+     * Return an HTTP response asking for login so the user get a valid token
+     *
+     * @return Response
+     */
+    public function notifyInvalidToken(Request $request)
+    {
+        return response(
+            json_encode(['message' => 'Invalid token. Please, login.']),
+            401
+        )->header('Content-Type', 'application/json');
     }
 }
