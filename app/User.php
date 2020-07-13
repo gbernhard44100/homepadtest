@@ -37,4 +37,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get all of the registrations for the package.
+     */
+    public function registrations()
+    {
+        return $this->hasMany('App\Registration');
+    }
 }
