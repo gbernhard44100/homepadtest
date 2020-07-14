@@ -19,12 +19,11 @@ class PackageSeeder extends Seeder
         $packageQty = 15;
         $lengthPackageName = 10;
 
-        for ($index = 1 ; $index <= $packageQty ; $index++) {
+        for ($index = 1; $index <= $packageQty; $index++) {
             DB::table('packages')->insert([
                 'name' => strtolower('Package N°' . $index . ': ' . Str::random($lengthPackageName)),
-                'limit' => random_int(3,8)
+                'limit' => random_int(3, 8)
             ]);
         }
-
     }
 }
