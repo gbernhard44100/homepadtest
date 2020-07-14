@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,7 +17,7 @@ class OAuthController extends Controller
      *
      * @return Response Json information containing the username and the access token
      */
-    public function login(Request $request)
+    public function login(Request $request): Response
     {
         if (!$this->isFormCompleted($request)) {
             return response(
@@ -46,9 +47,9 @@ class OAuthController extends Controller
     /**
      * Check if the required fields are properly typed
      *
-     * @return boolean Return true if the form is properly completed. Return false Otherwise
+     * @return bool Return true if the form is properly completed. Return false Otherwise
      */
-    protected function isFormCompleted(Request $request)
+    protected function isFormCompleted(Request $request): bool
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|string',
@@ -67,9 +68,9 @@ class OAuthController extends Controller
     /**
      * Return an HTTP response asking for login so the user get a valid token
      *
-     * @return Response
+     * @return Response Response in json format inviting the user to login
      */
-    public function notifyInvalidToken(Request $request)
+    public function notifyInvalidToken(): Response
     {
         return response(
             json_encode(['message' => 'Invalid token. Please, login.']),

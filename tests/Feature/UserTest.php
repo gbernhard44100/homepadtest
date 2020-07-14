@@ -12,15 +12,15 @@ use Tests\TestCase;
  */
 class UserTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test if the user has been well registered
      *
      * @return void
      */
-    public function testRegistrationSuccessfull()
+    public function testRegistrationSuccessfull(): void
     {
-        DB::beginTransaction();
-
         $response = $this->postJson('api/users', ['name' => 'Sally', 'email' => 'sally@test.com', 'password' => 'azertyuiop']);
 
         $response
@@ -30,11 +30,9 @@ class UserTest extends TestCase
             ]);
 
         $this->assertDatabaseHas('users', [
-                'name' => 'Sally',
-                'email' => 'sally@test.com',
-            ]);
-
-        DB::rollBack();
+            'name' => 'Sally',
+            'email' => 'sally@test.com',
+        ]);
     }
 
     /**
@@ -42,11 +40,9 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testRegistrationFailed()
+    public function testRegistrationFailed(): void
     {
-        DB::beginTransaction();
-
-        $response1 = $this->postJson('api/users', ['name' => 'Sally', 'email' => 'sally@test.com', 'password' => 'azertyuiop']);
+        $this->postJson('api/users', ['name' => 'Sally', 'email' => 'sally@test.com', 'password' => 'azertyuiop']);
 
         $response2 = $this->postJson('api/users', ['name' => 'Sally2', 'email' => 'sally@test.com', 'password' => 'azer']);
         $response2
@@ -54,7 +50,5 @@ class UserTest extends TestCase
             ->assertJson([
                 'errors' => 'This email address has already been used! | Your password is too short'
             ]);
-
-        DB::rollBack();
     }
 }

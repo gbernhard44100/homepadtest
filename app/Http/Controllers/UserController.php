@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,10 +25,11 @@ class UserController extends Controller
 
     /**
      * Register a new user
+     * @param \Illuminate\Http\Request The HTTP request in json format that contains the information from the new user
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response Response in json format containing the name and the email of the registered user
      */
-    public function register(Request $request)
+    public function register(Request $request): Response
     {
         $codeStatus = 201;
         $message = ['name' => $request->input('name'), 'email' => $request->input('email')];
@@ -45,11 +47,12 @@ class UserController extends Controller
     }
 
     /**
-     *  Check the Registration request and get the error messages
+     * Check the Registration request and get the error messages
+     * @param \Illuminate\Http\Request The HTTP request in json format that contains the information from the new user
      *
      * @return array All error messages regarding registration
      */
-    protected function getRegistrationErrors(Request $request)
+    protected function getRegistrationErrors(Request $request): array
     {
         $errors = [];
 
@@ -69,10 +72,11 @@ class UserController extends Controller
 
     /**
      * Create the new user in the database
+     * @param \Illuminate\Http\Request The HTTP request in json format that contains the information from the new user
      *
-     * @return \App\User
+     * @return \App\User The user instance registered in the database
      */
-    protected function store(Request $request)
+    protected function store(Request $request): User
     {
         return User::create([
             'name' => $request->input('name'),
