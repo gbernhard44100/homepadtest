@@ -6,7 +6,7 @@ use App\Package;
 use App\Registration;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 
 /**
  * Class that controls all requests regarding the packages
@@ -18,11 +18,11 @@ class PackageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(): Response
     {
         $packages = [];
 
-        foreach (Package::all() as $package) {
+        foreach (Package::withCount('registrations')->get() as $package) {
             $packageAvailable = false;
 
             if ($package->registrations_count < $package->limit) {
@@ -33,7 +33,7 @@ class PackageController extends Controller
                 'id' => $package->id,
                 'name' => $package->name,
                 'limit' => $package->limit,
-                'Availability' => $packageAvailable
+                'availability' => $packageAvailable
             ];
         }
 

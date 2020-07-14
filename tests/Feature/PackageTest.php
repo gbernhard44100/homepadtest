@@ -13,12 +13,14 @@ use Tests\TestCase;
  */
 class PackageTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * Test if the user cannot access if the Token is invalid
      *
      * @return void
      */
-    public function testAccessPackageListFailed()
+    public function testAccessPackageListFailed(): void
     {
         $response = $this->getJson('api/packages');
 
@@ -30,18 +32,14 @@ class PackageTest extends TestCase
      *
      * @return void
      */
-    public function testAccessPackageListSuccess()
+    public function testAccessPackageListSuccess(): void
     {
-        DB::beginTransaction();
-
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user, 'api');
+        $this->seed();
+        $this->actingAs(factory(User::class)->create(), 'api');
 
         $response = $this->getJson('api/packages');
-
         $response->assertStatus(200);
 
-        DB::rollBack();
+        $response->assertJsonStructure([['id','name', 'limit', 'availability']]);
     }
 }
