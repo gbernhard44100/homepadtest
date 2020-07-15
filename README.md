@@ -21,6 +21,7 @@ The necessary box will be downloaded and your VM vagrant will be set on.
 1. Clone this repository
 2. rename the **.env.example file** at the root of the project and replace it by **.env**
 3. fill the following variables in the **.env** file :
+* APP_URL
 * DB_CONNECTION
 * DB_HOST
 * DB_PORT
@@ -31,7 +32,8 @@ For the next step you will go to the project folder and launchou the following c
 4. **composer install** to install all the necessary dependencies
 5. **php artisan migrate:fresh --seed** to create all the necessary tables with their relations(primary and foreign keys). The packages table will be filled automatically thanks to the seeder.
 6. **php artisan key:generate** to generate the secret key for your application
-7. **php artisan passport:install** to generate the client ids and tokens for the Oauth authentications. Once this command executed to series of {client_id and token} will be shown on the terminal. The first one is for the **Laravel Personal Access Client** and the second is for the Laravel Password Grant Client. Take the **Laravel Personal Access Client** credentials to fill the variable **PASSPORT_PERSONAL_ACCESS_CLIENT_ID** and **PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET** in the **.env** file.
+7. **IF YOU DON'T WANT TO KEEP THE DEFAULT ID AND SECRET OF YOUR PASSPORT CLIENT:** 
+**php artisan passport:install** to generate the new clients id and token for the Oauth authentications. Once this command executed to series of {client_id and token} will be shown on the terminal. The first one is for the **Laravel Personal Access Client** and the second is for the Laravel Password Grant Client. Take the **Laravel Personal Access Client** credentials to fill the variable **PASSPORT_PERSONAL_ACCESS_CLIENT_ID** and **PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET** in the **.env** file.
 
 Everything is now set to run the API :
 * You can testthe good functionning of the API by launching the command **phpunit**
