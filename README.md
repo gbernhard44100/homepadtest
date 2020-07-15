@@ -1,85 +1,38 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+## About HomepadTest
+It is a REST API I have prepared to show my skills using the framework Laravel 7.19.0 and PHP7.4.
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## It is recommended you use the VM Homestead to develop your project with Laravel
+1. Install **Vagrant** on your computer
+2. Install **Virtualbox** on your computer
+3. Clone the Homestead repository : **git clone https://github.com/laravel/homestead.git ~/Homestead**
+4. Go inside the repository you have cloned (**cd ~/Homestead**) and launch **bash init.sh** to create the **Homestead.yaml** filr
+5. Create a repository where you will store the project to run
+6. Fill the **Homestead.yaml** file to configure your vagrant VM
+7. Generate the SSH key by launching the command **ssh-keygen -t rsa** and fill the information
+8. Go to the clone repository and launch to command : **vagrant up**
 
-## About Laravel
+The necessary box will be downloaded and your VM vagrant will be set on.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* To acces the VM via SSH use the command **vagrant ssh**
+* To stop the VM use the command **vagrant halt**
+* To reload the VM use the command **vagrant reload --provision**
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Project installation
+1. Clone this repository
+2. rename the **.env.example file** at the root of the project and replace it by **.env**
+3. fill the following variables in the **.env** file :
+* DB_CONNECTION
+* DB_HOST
+* DB_PORT
+* DB_DATABASE
+* DB_USERNAME
+* DB_PASSWORD
+For the next step you will go to the project folder and launchou the following commands :
+4. **composer install** to install all the necessary dependencies
+5. **php artisan migrate:fresh --seed** to create all the necessary tables with their relations(primary and foreign keys). The packages table will be filled automatically thanks to the seeder.
+6. **php artisan key:generate** to generate the secret key for your application
+7. **php artisan passport:install** to generate the client ids and tokens for the Oauth authentications. Once this command executed to series of {client_id and token} will be shown on the terminal. The first one is for the **Laravel Personal Access Client** and the second is for the Laravel Password Grant Client. Take the **Laravel Personal Access Client** credentials to fill the variable **PASSPORT_PERSONAL_ACCESS_CLIENT_ID** and **PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET** in the **.env** file.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-
-### Community Sponsors
-
-<a href="https://op.gg"><img src="http://opgg-static.akamaized.net/icon/t.rectangle.png" width="150"></a>
-
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [云软科技](http://www.yunruan.ltd/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Everything is now set to run the API :
+* You can testthe good functionning of the API by launching the command **phpunit**
+* The API documentation is available at the base of the API (URL : "/")
